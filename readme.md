@@ -12,7 +12,7 @@ Install & Usage
 ```
 $ pip install Django # get new version
 $ git clone https://github.com/agusmakmun/resistor-calculator.git
-$ cd resistor/
+$ cd resistor-calculator/
 $ ./manage.py runserver
 ```
 
