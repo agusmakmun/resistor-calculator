@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noodp, noydir"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resistor Calculator</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="all">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    body {font-size: 13px;font-family: 'Raleway', sans-serif;background: url("https://www.toptal.com/designers/subtlepatterns/patterns/subtle_dots.png")}
+    .btn {border: none;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);}
+    .btn-warning {background-color: #f0AD4E;}
+    .input-group-addon {font-size: 12px;border: none;color: #fff;border-radius: 3px;text-transform: uppercase;background-color: #33A4B7;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);}
+    .cs-max-4 {max-width: 25%}
+    .cs-max-5 {max-width: 20%}
+    .results {padding: 7px 15px}
+    .no-radius {border-radius: 0!important}
+    .container {max-width: 900px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">Resistor Calculator</h1>
+    <p class="text-center">To calculate and check resistance of the resistor by colors. This form is available for 4 and 5 color bracelets.</p>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="glyphicon glyphicon-info-sign"></i> Resistor with 4 Color Bracelets
+      </div>
+      <div class="panel-body">
+        <form id="form-4" role="form" method="POST">{% csrf_token %}
+    			<div class="input-group" style="margin-bottom: 2em;">
+    			  <span class="input-group-addon">Color Selection</span>
+    			    {% for value in form4bracelet %}
+    			    	{{ value }}
+    				  {% endfor %}
+    			</div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="alert alert-warning results">No Result!</div>
+            </div>
+            <div class="col-md-6">
+              <button class="form-control btn btn-warning" type="submit">
+        				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Check Resistance!</button>
+            </div>
+          </div>
+    		</form>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="glyphicon glyphicon-info-sign"></i> Resistor with 5 Color Bracelets
+      </div>
+      <div class="panel-body">
+        <form id="form-5" role="form" method="POST">{% csrf_token %}
+    			<div class="input-group" style="margin-bottom: 2em;">
+    			  <span class="input-group-addon">Color Selection</span>
+    			    {% for value in form5bracelet %}
+    			    	{{ value }}
+    				  {% endfor %}
+    			</div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="alert alert-warning results">No Result!</div>
+            </div>
+            <div class="col-md-6">
+              <button class="form-control btn btn-warning" type="submit">
+        				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Check Resistance!</button>
+            </div>
+          </div>
+    		</form>
+      </div>
+    </div>
+  </div><!-- end /.container -->
+
+  <script>
+    $('#form-4, #form-5').submit(function(){
+      var form = $(this);
+      $.ajax({
+        type: 'POST',
+        url: '{% url "resistor_form_page" %}',
+        data: form.serialize(),
+        success: function(data) {
+          //console.log(data);
+          form.find('.results').html(data.plain);
+        }
+      });
+      return false;
+    });
+  </script>
+
+  <div class="container">
+  	<h4># Table Resistor Color Values in 4 Bracelet.</h4>
+  	<table class="table table-bordered table-striped">
+  		<thead>
+  			<tr><th colspan="2">Color</th><th>Bracelet 1</th><th>Bracelet 2</th><th>Bracelet 3</th><th>Bracelet 4</th></tr>
+  		</thead>
+  		<tdbody>
+  			<tr><td style="background: #000000;"></td><td>Black</td>		<td>0</td><td>0</td><td>10**0</td><td>-</td></tr>
+  			<tr><td style="background: #984807;"></td><td>Brown</td>		<td>1</td><td>1</td><td>10**1</td><td>-</td></tr>
+  			<tr><td style="background: #FF0000;"></td><td>Red</td>		<td>2</td><td>2</td><td>10**2</td><td>-</td></tr>
+  			<tr><td style="background: #FFC000;"></td><td>Orange</td>		<td>3</td><td>3</td><td>10**3</td><td>-</td></tr>
+  			<tr><td style="background: #FFFF00;"></td><td>Yellow</td>		<td>4</td><td>4</td><td>10**4</td><td>-</td></tr>
+  			<tr><td style="background: #00B050;"></td><td>Green</td>		<td>5</td><td>5</td><td>10**5</td><td>-</td></tr>
+  			<tr><td style="background: #0070C0;"></td><td>Blue</td>			<td>6</td><td>6</td><td>10**6</td><td>-</td></tr>
+  			<tr><td style="background: #7030A0;"></td><td>Purple</td>			<td>7</td><td>7</td><td>10**7</td><td>-</td></tr>
+  			<tr><td style="background: #7F7F7F;"></td><td>Gray</td>		<td>8</td><td>8</td><td>10**8</td><td>-</td></tr>
+  			<tr><td style="background: #FFFFFF;"></td><td>White</td>		<td>9</td><td>9</td><td>10**9</td><td>-</td></tr>
+  			<tr><td style="background: #FFCC00;"></td><td>Gold</td>			<td>-</td><td>-</td><td>10**-1</td><td>5%</td></tr>
+  			<tr><td style="background: #D9D9D9;"></td><td>Silver</td>		<td>-</td><td>-</td><td>10**-2</td><td>10%</td></tr>
+  			<tr><td style="background: #FFFFCC;"></td><td>No Color</td>	<td>-</td><td>-</td><td>-</td><td>20%</td></tr>
+  		</tdbody>
+  	</table>
+
+  	<h4># Table Resistor Color Values in 5 Bracelet.</h4>
+  	<table class="table table-bordered table-striped">
+  		<thead>
+  			<tr><th colspan="2">Color</th><th>Bracelet 1</th><th>Bracelet 2</th><th>Bracelet 3</th><th>Bracelet 4</th><th>Bracelet 5</th></tr>
+  		</thead>
+  		<tdbody>
+  			<tr><td style="background: #000000;"></td><td>Black</td>		<td>0</td><td>0</td><td>0</td><td>10**0</td><td>-</td></tr>
+  			<tr><td style="background: #984807;"></td><td>Brown</td>		<td>1</td><td>1</td><td>1</td><td>10**1</td><td>1%</td></tr>
+  			<tr><td style="background: #FF0000;"></td><td>Red</td>		<td>2</td><td>2</td><td>2</td><td>10**2</td><td>2%</td></tr>
+  			<tr><td style="background: #FFC000;"></td><td>Orange</td>		<td>3</td><td>3</td><td>3</td><td>10**3</td><td>-</td></tr>
+  			<tr><td style="background: #FFFF00;"></td><td>Yellow</td>		<td>4</td><td>4</td><td>4</td><td>10**4</td><td>-</td></tr>
+  			<tr><td style="background: #00B050;"></td><td>Green</td>		<td>5</td><td>5</td><td>5</td><td>10**5</td><td>0.5%</td></tr>
+  			<tr><td style="background: #0070C0;"></td><td>Blue</td>			<td>6</td><td>6</td><td>6</td><td>10**6</td><td>0.25%</td></tr>
+  			<tr><td style="background: #7030A0;"></td><td>Purple</td>			<td>7</td><td>7</td><td>7</td><td>10**7</td><td>0.1%</td></tr>
+  			<tr><td style="background: #7F7F7F;"></td><td>Gray</td>		<td>8</td><td>8</td><td>8</td><td>-</td><td>-</td></tr>
+  			<tr><td style="background: #FFFFFF;"></td><td>White</td>		<td>9</td><td>9</td><td>9</td><td>-</td><td>-</td></tr>
+  			<tr><td style="background: #FFCC00;"></td><td>Gold</td>			<td>-</td><td>-</td><td>-</td><td>10**-1</td><td>5%</td></tr>
+  			<tr><td style="background: #D9D9D9;"></td><td>Silver</td>		<td>-</td><td>-</td><td>-</td><td>10**-2</td><td>10%</td></tr>
+  		</tdbody>
+  	</table>
+  	<hr />
+    <div class="text-center">
+      Made with <i class="glyphicon glyphicon-heart"></i> from Indonesia.<br />
+      Copyright {% now "Y" %} - Resistor Calculator - all rights reversed.
+    </div>
+    <hr />
+  </div><!-- end /.container -->
+</body>
+</html>
