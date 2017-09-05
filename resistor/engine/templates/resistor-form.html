@@ -45,7 +45,10 @@
       <div class="panel-body">
         <form id="form-4" role="form" method="POST">{% csrf_token %}
           <div class="input-group" style="margin-bottom: 2em;">
-            <span class="input-group-addon">Color Selection</span> {% for value in form4bracelet %} {{ value }} {% endfor %}
+            <span class="input-group-addon">Color Selection</span>
+            {% for value in form4bracelet %}
+              {{ value }}
+            {% endfor %}
           </div>
           <div class="row">
             <div class="col-md-6">
@@ -67,7 +70,10 @@
       <div class="panel-body">
         <form id="form-5" role="form" method="POST">{% csrf_token %}
           <div class="input-group" style="margin-bottom: 2em;">
-            <span class="input-group-addon">Color Selection</span> {% for value in form5bracelet %} {{ value }} {% endfor %}
+            <span class="input-group-addon">Color Selection</span>
+            {% for value in form5bracelet %}
+              {{ value }}
+            {% endfor %}
           </div>
           <div class="row">
             <div class="col-md-6">
